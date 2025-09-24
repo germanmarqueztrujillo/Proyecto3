@@ -4,7 +4,9 @@ import com.example.ecommerce.order.dto.OrderCreateDTO;
 import com.example.ecommerce.order.dto.OrderDTO;
 import com.example.ecommerce.order.exception.EmptyProductsException;
 import com.example.ecommerce.order.exception.OrderNotFoundException;
-import com.example.ecommerce.order.exception.OrderStatusIsNotCreated;
+import com.example.ecommerce.order.exception.OrderStatusIsNotCreatedException;
+import com.example.ecommerce.order.exception.OrderStatusIsNotPaidException;
+import com.example.ecommerce.order.exception.OrderStatusIsNotShippedException;
 import com.example.ecommerce.order.mapper.OrderMapper;
 import com.example.ecommerce.order.model.Order;
 import com.example.ecommerce.order.model.Status;
@@ -47,7 +49,7 @@ public class OrderService {
     if (order.getProducts().size() == 0) {
       throw new EmptyProductsException();
     } else if (order.getStatus() != Status.CREATED) {
-      throw new OrderStatusIsNotCreated();
+      throw new OrderStatusIsNotCreatedException();
     }
 
     orderRepository.updateOrderStatusToPaidById(orderId);
@@ -59,7 +61,7 @@ public class OrderService {
     ;
 
     if (order.getStatus() != Status.PAID) {
-      throw new OrderStatusIsNotCreated();
+      throw new OrderStatusIsNotPaidException();
     }
 
     orderRepository.updateOrderStatusToShippedById(orderId);
@@ -71,7 +73,7 @@ public class OrderService {
     ;
 
     if (order.getStatus() != Status.SHIPPED) {
-      throw new OrderStatusIsNotCreated();
+      throw new OrderStatusIsNotShippedException();
     }
 
     orderRepository.updateOrderStatusToDeliveredById(orderId);
