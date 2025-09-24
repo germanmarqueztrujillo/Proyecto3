@@ -37,7 +37,7 @@ public class Order {
   @Enumerated(EnumType.STRING)
   private Status status;
 
-  @NotNull @Past private OffsetDateTime dueDate;
+  @NotNull @Past private OffsetDateTime createdAt;
 
   @ManyToOne
   @JoinColumn(name = "customer_id", nullable = false)
