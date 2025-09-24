@@ -50,6 +50,16 @@ public class OrderService {
       throw new OrderStatusIsNotCreated();
     }
 
-    orderRepository.updateOrderStatusById(orderId);
+    orderRepository.updateOrderStatusToPaidById(orderId);
+  }
+
+  public void updateStatusToShipped(Long orderId) {
+    Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));;
+
+    if (order.getStatus() != Status.PAID) {
+      throw new OrderStatusIsNotCreated();
+    }
+
+    orderRepository.updateOrderStatusToShippedById(orderId);
   }
 }
