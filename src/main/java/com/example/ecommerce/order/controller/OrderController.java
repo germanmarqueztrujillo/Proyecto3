@@ -35,4 +35,9 @@ public class OrderController {
   public void updateStatusToPaid(@PathVariable Long id) {
     orderService.updateStatusToPaidById(id);
   }
+
+  @PatchMapping("/{id}/ship")
+  public void updateStatusToShipped(@PathVariable Long id) {
+    orderService.updateStatusToShippedById(id);
+  }
 }
