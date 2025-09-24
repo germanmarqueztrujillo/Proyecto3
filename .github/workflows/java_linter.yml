@@ -28,6 +28,6 @@ jobs:
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git add .
-            git commit -m "chore: apply Spotless formatting"
+            git commit -m "style: apply Spotless formatting"
             git push
           fi
