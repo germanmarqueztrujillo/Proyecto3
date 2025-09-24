@@ -62,4 +62,14 @@ public class OrderService {
 
     orderRepository.updateOrderStatusToShippedById(orderId);
   }
+
+  public void updateStatusToDelivered(Long orderId) {
+    Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));;
+
+    if (order.getStatus() != Status.SHIPPED) {
+      throw new OrderStatusIsNotCreated();
+    }
+
+    orderRepository.updateOrderStatusToDeliveredById(orderId);
+  }
 }
