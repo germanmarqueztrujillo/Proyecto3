@@ -1,7 +1,6 @@
 package com.example.ecommerce.order.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -25,14 +24,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -57,9 +55,9 @@ class OrderControllerTest {
   @BeforeEach
   void setUp() {
     Mockito.reset(orderService);
-    
+
     sampleOrderCreateDTO = new OrderCreateDTO(1L, Arrays.asList(1L, 2L, 3L));
-    
+
     sampleOrderDTO = new OrderDTO();
     sampleOrderDTO.setCreatedAt(OffsetDateTime.now().minusHours(1));
     sampleOrderDTO.setStatus(Status.CREATED);
@@ -101,18 +99,14 @@ class OrderControllerTest {
     Long nonExistentId = 999L;
     when(orderService.getOrderById(nonExistentId))
         .thenThrow(new OrderNotFoundException(nonExistentId));
-    mockMvc
-        .perform(get("/orders/{id}", nonExistentId))
-        .andExpect(status().isNotFound());
+    mockMvc.perform(get("/orders/{id}", nonExistentId)).andExpect(status().isNotFound());
   }
 
   @Test
   void whenUpdateStatusToPaid_thenReturnOk() throws Exception {
     Long orderId = 1L;
     doNothing().when(orderService).updateStatusToPaidById(orderId);
-    mockMvc
-        .perform(patch("/orders/{id}/pay", orderId))
-        .andExpect(status().isOk());
+    mockMvc.perform(patch("/orders/{id}/pay", orderId)).andExpect(status().isOk());
 
     verify(orderService).updateStatusToPaidById(orderId);
   }
@@ -121,9 +115,7 @@ class OrderControllerTest {
   void whenUpdateStatusToShipped_thenReturnOk() throws Exception {
     Long orderId = 1L;
     doNothing().when(orderService).updateStatusToShippedById(orderId);
-    mockMvc
-        .perform(patch("/orders/{id}/ship", orderId))
-        .andExpect(status().isOk());
+    mockMvc.perform(patch("/orders/{id}/ship", orderId)).andExpect(status().isOk());
 
     verify(orderService).updateStatusToShippedById(orderId);
   }
@@ -132,9 +124,7 @@ class OrderControllerTest {
   void whenUpdateStatusToDelivered_thenReturnOk() throws Exception {
     Long orderId = 1L;
     doNothing().when(orderService).updateStatusToDeliveredById(orderId);
-    mockMvc
-        .perform(patch("/orders/{id}/deliver", orderId))
-        .andExpect(status().isOk());
+    mockMvc.perform(patch("/orders/{id}/deliver", orderId)).andExpect(status().isOk());
 
     verify(orderService).updateStatusToDeliveredById(orderId);
   }
@@ -171,29 +161,26 @@ class OrderControllerTest {
   void whenUpdateStatusToPaidWithWrongStatus_thenReturn404() throws Exception {
     Long orderId = 1L;
     doThrow(new OrderStatusIsNotCreatedException())
-        .when(orderService).updateStatusToPaidById(orderId);
-    mockMvc
-        .perform(patch("/orders/{id}/pay", orderId))
-        .andExpect(status().isConflict());
+        .when(orderService)
+        .updateStatusToPaidById(orderId);
+    mockMvc.perform(patch("/orders/{id}/pay", orderId)).andExpect(status().isConflict());
   }
 
   @Test
   void whenUpdateStatusToShippedWithWrongStatus_thenReturn404() throws Exception {
     Long orderId = 1L;
     doThrow(new OrderStatusIsNotPaidException())
-        .when(orderService).updateStatusToShippedById(orderId);
-    mockMvc
-        .perform(patch("/orders/{id}/ship", orderId))
-        .andExpect(status().isConflict());
+        .when(orderService)
+        .updateStatusToShippedById(orderId);
+    mockMvc.perform(patch("/orders/{id}/ship", orderId)).andExpect(status().isConflict());
   }
 
   @Test
   void whenUpdateStatusToDeliveredWithWrongStatus_thenReturn404() throws Exception {
     Long orderId = 1L;
     doThrow(new OrderStatusIsNotShippedException())
-        .when(orderService).updateStatusToDeliveredById(orderId);
-    mockMvc
-        .perform(patch("/orders/{id}/deliver", orderId))
-        .andExpect(status().isConflict());
+        .when(orderService)
+        .updateStatusToDeliveredById(orderId);
+    mockMvc.perform(patch("/orders/{id}/deliver", orderId)).andExpect(status().isConflict());
   }
 }
