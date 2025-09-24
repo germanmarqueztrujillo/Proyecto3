@@ -1,10 +1,9 @@
 package com.example.ecommerce.order.dto;
 
-import java.time.OffsetDateTime;
-import java.util.List;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

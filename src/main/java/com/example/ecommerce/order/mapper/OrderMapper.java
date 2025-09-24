@@ -4,9 +4,7 @@ import com.example.ecommerce.order.dto.OrderCreateDTO;
 import com.example.ecommerce.order.dto.OrderDTO;
 import com.example.ecommerce.order.model.Order;
 import com.example.ecommerce.product.model.Product;
-
 import java.util.List;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -24,10 +22,8 @@ public interface OrderMapper {
 
   default List<Long> mapProductsToIds(List<Product> products) {
     if (products == null) {
-        return null;
+      return null;
     }
-    return products.stream()
-            .map(Product::getId)
-            .toList();
+    return products.stream().map(Product::getId).toList();
   }
 }

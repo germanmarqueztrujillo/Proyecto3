@@ -1,9 +1,7 @@
 package com.example.ecommerce.order.repository;
 
 import com.example.ecommerce.order.model.Order;
-
 import jakarta.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +15,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
   @Transactional
   @Query("UPDATE Order o SET o.status = PAID WHERE o.id = :orderId")
   void updateOrderStatusToPaidById(@Param("orderId") Long orderId);
-  
+
   @Modifying
   @Transactional
   @Query("UPDATE Order o SET o.status = SHIPPED WHERE o.id = :orderId")
