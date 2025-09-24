@@ -10,13 +10,11 @@ import com.example.ecommerce.order.model.Order;
 import com.example.ecommerce.order.model.Status;
 import com.example.ecommerce.order.repository.OrderRepository;
 import com.example.ecommerce.product.model.Product;
-
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -93,7 +91,7 @@ class CustomerServiceTest {
     assertEquals(Status.PAID, result.get(1).getStatus());
     assertEquals(1L, result.get(0).getCustomerId());
     assertEquals(1L, result.get(1).getCustomerId());
-    
+
     verify(orderRepository).findByCustomerId(1L);
     verify(orderMapper).toDtoList(sampleOrders);
   }
@@ -102,7 +100,7 @@ class CustomerServiceTest {
   void whenGetOrdersByCustomerId_withCustomerWithoutOrders_thenReturnEmptyList() {
     List<Order> emptyOrders = new ArrayList<>();
     List<OrderDTO> emptyOrderDTOs = new ArrayList<>();
-    
+
     when(orderRepository.findByCustomerId(2L)).thenReturn(emptyOrders);
     when(orderMapper.toDtoList(emptyOrders)).thenReturn(emptyOrderDTOs);
 
@@ -111,7 +109,7 @@ class CustomerServiceTest {
     assertNotNull(result);
     assertTrue(result.isEmpty());
     assertEquals(0, result.size());
-    
+
     verify(orderRepository).findByCustomerId(2L);
     verify(orderMapper).toDtoList(emptyOrders);
   }
@@ -120,7 +118,7 @@ class CustomerServiceTest {
   void whenGetOrdersByCustomerId_withSingleOrder_thenReturnSingleOrderDTO() {
     List<Order> singleOrder = Arrays.asList(sampleOrders.get(0));
     List<OrderDTO> singleOrderDTO = Arrays.asList(sampleOrderDTOs.get(0));
-    
+
     when(orderRepository.findByCustomerId(1L)).thenReturn(singleOrder);
     when(orderMapper.toDtoList(singleOrder)).thenReturn(singleOrderDTO);
 
@@ -133,7 +131,7 @@ class CustomerServiceTest {
     assertNotNull(result.get(0).getProductsId());
     assertEquals(1, result.get(0).getProductsId().size());
     assertEquals(1L, result.get(0).getProductsId().get(0));
-    
+
     verify(orderRepository).findByCustomerId(1L);
     verify(orderMapper).toDtoList(singleOrder);
   }
@@ -154,7 +152,8 @@ class CustomerServiceTest {
     order4.setCustomer(sampleCustomer);
     order4.setProducts(Arrays.asList(sampleProduct));
 
-    List<Order> multipleOrders = Arrays.asList(sampleOrders.get(0), sampleOrders.get(1), order3, order4);
+    List<Order> multipleOrders =
+        Arrays.asList(sampleOrders.get(0), sampleOrders.get(1), order3, order4);
 
     OrderDTO orderDTO3 = new OrderDTO();
     orderDTO3.setCreatedAt(order3.getCreatedAt());
@@ -168,7 +167,8 @@ class CustomerServiceTest {
     orderDTO4.setCustomerId(1L);
     orderDTO4.setProductsId(Arrays.asList(1L));
 
-    List<OrderDTO> multipleOrderDTOs = Arrays.asList(sampleOrderDTOs.get(0), sampleOrderDTOs.get(1), orderDTO3, orderDTO4);
+    List<OrderDTO> multipleOrderDTOs =
+        Arrays.asList(sampleOrderDTOs.get(0), sampleOrderDTOs.get(1), orderDTO3, orderDTO4);
 
     when(orderRepository.findByCustomerId(1L)).thenReturn(multipleOrders);
     when(orderMapper.toDtoList(multipleOrders)).thenReturn(multipleOrderDTOs);
@@ -181,14 +181,15 @@ class CustomerServiceTest {
     assertEquals(Status.PAID, result.get(1).getStatus());
     assertEquals(Status.SHIPPED, result.get(2).getStatus());
     assertEquals(Status.DELIVERED, result.get(3).getStatus());
-    
-    result.forEach(orderDTO -> {
-      assertEquals(1L, orderDTO.getCustomerId());
-      assertNotNull(orderDTO.getCreatedAt());
-      assertNotNull(orderDTO.getProductsId());
-      assertFalse(orderDTO.getProductsId().isEmpty());
-    });
-    
+
+    result.forEach(
+        orderDTO -> {
+          assertEquals(1L, orderDTO.getCustomerId());
+          assertNotNull(orderDTO.getCreatedAt());
+          assertNotNull(orderDTO.getProductsId());
+          assertFalse(orderDTO.getProductsId().isEmpty());
+        });
+
     verify(orderRepository).findByCustomerId(1L);
     verify(orderMapper).toDtoList(multipleOrders);
   }
