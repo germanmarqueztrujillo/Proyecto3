@@ -1,5 +1,7 @@
 package com.example.ecommerce.order.model;
 
+import com.example.ecommerce.customer.model.Customer;
+import com.example.ecommerce.product.model.Product;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,16 +15,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.example.ecommerce.customer.model.Customer;
-import com.example.ecommerce.product.model.Product;
 
 @Getter
 @Setter
@@ -46,9 +45,8 @@ public class Order {
 
   @ManyToMany
   @JoinTable(
-    name = "orders_product",
-    joinColumns = @JoinColumn(name = "order_id"),
-    inverseJoinColumns = @JoinColumn(name = "product_id")
-  )
+      name = "orders_product",
+      joinColumns = @JoinColumn(name = "order_id"),
+      inverseJoinColumns = @JoinColumn(name = "product_id"))
   private List<Product> products = new ArrayList<Product>();
 }
