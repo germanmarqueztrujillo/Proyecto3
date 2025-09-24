@@ -35,7 +35,7 @@ public class Order {
   private Long id;
 
   @Enumerated(EnumType.STRING)
-  private Status status;
+  private Status status = Status.CREATED;
 
   @NotNull @Past private OffsetDateTime createdAt;
 
