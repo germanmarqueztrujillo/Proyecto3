@@ -25,9 +25,21 @@ public class OrderExceptionHandler {
     return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
   }
 
-  @ExceptionHandler(OrderStatusIsNotCreated.class)
+  @ExceptionHandler(OrderStatusIsNotCreatedException.class)
   public ResponseEntity<Map<String, Object>> handleOrderStatusIsNotCreated(
-      OrderStatusIsNotCreated ex) {
+      OrderStatusIsNotCreatedException ex) {
+    return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+  }
+
+  @ExceptionHandler(OrderStatusIsNotPaidException.class)
+  public ResponseEntity<Map<String, Object>> handleOrderStatusIsNotPaid(
+      OrderStatusIsNotPaidException ex) {
+    return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+  }
+
+    @ExceptionHandler(OrderStatusIsNotShippedException.class)
+  public ResponseEntity<Map<String, Object>> handleOrderStatusIsNotShipped(
+      OrderStatusIsNotShippedException ex) {
     return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
   }
 
