@@ -9,14 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-    @Value("${allowed.origins:*}")
-    private String allowedOrigins;
+  @Value("${allowed.origins:*}")
+  private String allowedOrigins;
 
-    @Override
-    public void addCorsMappings(@NonNull CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins(allowedOrigins)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
-                .allowedHeaders("*");
-    }
+  @Override
+  public void addCorsMappings(@NonNull CorsRegistry registry) {
+    registry
+        .addMapping("/**")
+        .allowedOrigins(allowedOrigins)
+        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+        .allowedHeaders("*");
+  }
 }
