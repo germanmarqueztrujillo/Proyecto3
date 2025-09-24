@@ -39,7 +39,7 @@ public class OrderService {
     return orderMapper.toDTO(createdOrder);
   }
 
-  public void updateStatusToPaid(Long orderId) {
+  public void updateStatusToPaidById(Long orderId) {
     Order order =
         orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
     ;
@@ -53,7 +53,7 @@ public class OrderService {
     orderRepository.updateOrderStatusToPaidById(orderId);
   }
 
-  public void updateStatusToShipped(Long orderId) {
+  public void updateStatusToShippedById(Long orderId) {
     Order order =
         orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
     ;
@@ -65,7 +65,7 @@ public class OrderService {
     orderRepository.updateOrderStatusToShippedById(orderId);
   }
 
-  public void updateStatusToDelivered(Long orderId) {
+  public void updateStatusToDeliveredById(Long orderId) {
     Order order =
         orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
     ;

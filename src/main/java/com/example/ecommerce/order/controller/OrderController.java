@@ -1,6 +1,7 @@
 package com.example.ecommerce.order.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +29,10 @@ public class OrderController {
   @GetMapping("/{id}")
   public OrderDTO getOrder(@PathVariable Long id) {
     return orderService.getOrderById(id);
+  }
+
+  @PatchMapping("/{id}/pay")
+  public void updateStatusToPaid(@PathVariable Long id) {
+    orderService.updateStatusToPaidById(id);
   }
 }
