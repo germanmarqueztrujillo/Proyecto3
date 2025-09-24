@@ -40,4 +40,9 @@ public class OrderController {
   public void updateStatusToShipped(@PathVariable Long id) {
     orderService.updateStatusToShippedById(id);
   }
+
+  @PatchMapping("/{id}/deliver")
+  public void updateStatusToDelivered(@PathVariable Long id) {
+    orderService.updateStatusToDeliveredById(id);
+  }
 }
