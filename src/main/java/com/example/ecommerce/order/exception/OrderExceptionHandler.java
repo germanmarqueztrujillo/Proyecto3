@@ -12,7 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackages = "com.example.library.order")
+@RestControllerAdvice(basePackages = "com.example.ecommerce.order")
 public class OrderExceptionHandler {
 
   @ExceptionHandler(EmptyProductsException.class)
@@ -33,19 +33,19 @@ public class OrderExceptionHandler {
   @ExceptionHandler(OrderStatusIsNotCreatedException.class)
   public ResponseEntity<Map<String, Object>> handleOrderStatusIsNotCreated(
       OrderStatusIsNotCreatedException ex) {
-    return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
   }
 
   @ExceptionHandler(OrderStatusIsNotPaidException.class)
   public ResponseEntity<Map<String, Object>> handleOrderStatusIsNotPaid(
       OrderStatusIsNotPaidException ex) {
-    return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
   }
 
   @ExceptionHandler(OrderStatusIsNotShippedException.class)
   public ResponseEntity<Map<String, Object>> handleOrderStatusIsNotShipped(
       OrderStatusIsNotShippedException ex) {
-    return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
