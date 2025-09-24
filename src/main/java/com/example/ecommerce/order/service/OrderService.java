@@ -16,9 +16,7 @@ import com.example.ecommerce.order.model.Status;
 import com.example.ecommerce.order.repository.OrderRepository;
 import com.example.ecommerce.product.model.Product;
 import com.example.ecommerce.product.repository.ProductRepository;
-
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -54,12 +52,16 @@ public class OrderService {
 
     Order order = orderMapper.toEntity(orderCreateDto);
 
-    Customer customer = customerRepository.findById(orderCreateDto.getCustomerId()).orElseThrow(() -> new CustomerNotFoundException(orderCreateDto.getCustomerId()));;
+    Customer customer =
+        customerRepository
+            .findById(orderCreateDto.getCustomerId())
+            .orElseThrow(() -> new CustomerNotFoundException(orderCreateDto.getCustomerId()));
+    ;
     List<Product> products = productRepository.findAllById(orderCreateDto.getProductsId());
 
     order.setCustomer(customer);
     order.setProducts(products);
-    
+
     Order createdOrder = orderRepository.save(order);
     return orderMapper.toDTO(createdOrder);
   }

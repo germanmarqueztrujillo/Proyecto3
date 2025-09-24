@@ -42,7 +42,7 @@ public class OrderExceptionHandler {
     return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
   }
 
-    @ExceptionHandler(OrderStatusIsNotShippedException.class)
+  @ExceptionHandler(OrderStatusIsNotShippedException.class)
   public ResponseEntity<Map<String, Object>> handleOrderStatusIsNotShipped(
       OrderStatusIsNotShippedException ex) {
     return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
