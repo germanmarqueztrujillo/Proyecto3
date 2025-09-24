@@ -21,14 +21,12 @@ import com.example.ecommerce.order.model.Status;
 import com.example.ecommerce.order.repository.OrderRepository;
 import com.example.ecommerce.product.model.Product;
 import com.example.ecommerce.product.repository.ProductRepository;
-
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -150,7 +148,8 @@ class OrderServiceTest {
     when(orderMapper.toEntity(sampleOrderCreateDTO)).thenReturn(sampleOrder);
     when(customerRepository.findById(1L)).thenReturn(Optional.empty());
 
-    assertThrows(CustomerNotFoundException.class, () -> orderService.createOrder(sampleOrderCreateDTO));
+    assertThrows(
+        CustomerNotFoundException.class, () -> orderService.createOrder(sampleOrderCreateDTO));
     verify(orderMapper).toEntity(sampleOrderCreateDTO);
     verify(customerRepository).findById(1L);
     verify(productRepository, never()).findAllById(anyList());
@@ -199,7 +198,8 @@ class OrderServiceTest {
 
     when(orderRepository.findById(1L)).thenReturn(Optional.of(paidOrder));
 
-    assertThrows(OrderStatusIsNotCreatedException.class, () -> orderService.updateStatusToPaidById(1L));
+    assertThrows(
+        OrderStatusIsNotCreatedException.class, () -> orderService.updateStatusToPaidById(1L));
     verify(orderRepository).findById(1L);
     verify(orderRepository, never()).updateOrderStatusToPaidById(any());
   }
@@ -232,7 +232,8 @@ class OrderServiceTest {
   void whenUpdateStatusToShipped_withWrongStatus_thenThrowOrderStatusIsNotPaidException() {
     when(orderRepository.findById(1L)).thenReturn(Optional.of(sampleOrder));
 
-    assertThrows(OrderStatusIsNotPaidException.class, () -> orderService.updateStatusToShippedById(1L));
+    assertThrows(
+        OrderStatusIsNotPaidException.class, () -> orderService.updateStatusToShippedById(1L));
     verify(orderRepository).findById(1L);
     verify(orderRepository, never()).updateOrderStatusToShippedById(any());
   }
@@ -256,7 +257,8 @@ class OrderServiceTest {
   void whenUpdateStatusToDelivered_withNonExistentOrder_thenThrowOrderNotFoundException() {
     when(orderRepository.findById(999L)).thenReturn(Optional.empty());
 
-    assertThrows(OrderNotFoundException.class, () -> orderService.updateStatusToDeliveredById(999L));
+    assertThrows(
+        OrderNotFoundException.class, () -> orderService.updateStatusToDeliveredById(999L));
     verify(orderRepository).findById(999L);
     verify(orderRepository, never()).updateOrderStatusToDeliveredById(any());
   }
@@ -265,7 +267,8 @@ class OrderServiceTest {
   void whenUpdateStatusToDelivered_withWrongStatus_thenThrowOrderStatusIsNotShippedException() {
     when(orderRepository.findById(1L)).thenReturn(Optional.of(sampleOrder));
 
-    assertThrows(OrderStatusIsNotShippedException.class, () -> orderService.updateStatusToDeliveredById(1L));
+    assertThrows(
+        OrderStatusIsNotShippedException.class, () -> orderService.updateStatusToDeliveredById(1L));
     verify(orderRepository).findById(1L);
     verify(orderRepository, never()).updateOrderStatusToDeliveredById(any());
   }

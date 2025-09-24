@@ -7,12 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.ecommerce.customer.service.CustomerService;
 import com.example.ecommerce.order.dto.OrderDTO;
 import com.example.ecommerce.order.model.Status;
-
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +40,7 @@ class CustomerControllerTest {
   @BeforeEach
   void setUp() {
     reset(customerService);
-    
+
     OrderDTO orderDTO1 = new OrderDTO();
     orderDTO1.setCreatedAt(OffsetDateTime.now());
     orderDTO1.setStatus(Status.CREATED);
@@ -112,7 +110,8 @@ class CustomerControllerTest {
   }
 
   @Test
-  void whenGetOrdersByCustomerId_withMultipleOrdersAndDifferentStatuses_thenReturnAllOrders() throws Exception {
+  void whenGetOrdersByCustomerId_withMultipleOrdersAndDifferentStatuses_thenReturnAllOrders()
+      throws Exception {
     OrderDTO orderDTO3 = new OrderDTO();
     orderDTO3.setCreatedAt(OffsetDateTime.now().minusDays(2));
     orderDTO3.setStatus(Status.SHIPPED);
@@ -125,7 +124,8 @@ class CustomerControllerTest {
     orderDTO4.setCustomerId(1L);
     orderDTO4.setProductsId(Arrays.asList(6L));
 
-    List<OrderDTO> multipleOrders = Arrays.asList(sampleOrderDTOs.get(0), sampleOrderDTOs.get(1), orderDTO3, orderDTO4);
+    List<OrderDTO> multipleOrders =
+        Arrays.asList(sampleOrderDTOs.get(0), sampleOrderDTOs.get(1), orderDTO3, orderDTO4);
     when(customerService.getOrdersByCustomerId(1L)).thenReturn(multipleOrders);
 
     mockMvc
@@ -172,7 +172,8 @@ class CustomerControllerTest {
   }
 
   @Test
-  void whenGetOrdersByCustomerId_withDifferentCustomerIds_thenCallServiceWithCorrectId() throws Exception {
+  void whenGetOrdersByCustomerId_withDifferentCustomerIds_thenCallServiceWithCorrectId()
+      throws Exception {
     when(customerService.getOrdersByCustomerId(5L)).thenReturn(new ArrayList<>());
     when(customerService.getOrdersByCustomerId(10L)).thenReturn(sampleOrderDTOs);
 
