@@ -21,6 +21,10 @@ public interface OrderMapper {
   @Mapping(source = "products", target = "productsId")
   OrderDTO toDTO(Order order);
 
+  @Mapping(source = "customer.id", target = "customerId")
+  @Mapping(source = "products", target = "productsId")
+  List<OrderDTO> toDtoList(List<Order> orders);
+
   default List<Long> mapProductsToIds(List<Product> products) {
     if (products == null) {
       return null;
