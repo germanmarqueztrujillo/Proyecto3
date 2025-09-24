@@ -14,7 +14,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,7 @@ public class Order {
   @Enumerated(EnumType.STRING)
   private Status status = Status.CREATED;
 
-  @NotNull @Past private OffsetDateTime createdAt;
+  @NotNull private OffsetDateTime createdAt = OffsetDateTime.now();
 
   @ManyToOne
   @JoinColumn(name = "customer_id", nullable = false)

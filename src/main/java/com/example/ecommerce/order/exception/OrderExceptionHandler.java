@@ -25,6 +25,11 @@ public class OrderExceptionHandler {
     return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
   }
 
+  @ExceptionHandler(CustomerNotFoundException.class)
+  public ResponseEntity<Map<String, Object>> handleCustomerNotFound(CustomerNotFoundException ex) {
+    return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+  }
+
   @ExceptionHandler(OrderStatusIsNotCreatedException.class)
   public ResponseEntity<Map<String, Object>> handleOrderStatusIsNotCreated(
       OrderStatusIsNotCreatedException ex) {
