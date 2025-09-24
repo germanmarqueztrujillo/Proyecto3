@@ -17,6 +17,16 @@ public class OrderExceptionHandler {
 
   @ExceptionHandler(EmptyProductsException.class)
   public ResponseEntity<Map<String, Object>> handleEmptyProducts(EmptyProductsException ex) {
+    return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+  }
+
+  @ExceptionHandler(OrderNotFoundException.class)
+  public ResponseEntity<Map<String, Object>> handleOrderNotFound(OrderNotFoundException ex) {
+    return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+  }
+
+    @ExceptionHandler(OrderStatusIsNotCreated.class)
+  public ResponseEntity<Map<String, Object>> handleOrderStatusIsNotCreated(OrderStatusIsNotCreated ex) {
     return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
   }
 
